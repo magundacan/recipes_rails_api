@@ -44,15 +44,6 @@ class Api::RecipesController < Api::BaseController
   end
 
   def index
-    request = {}
-
-    request.merge!('title' => params.dig(:recipes, :title))
-    request.merge!('descriptions' => params.dig(:recipes, :descriptions))
-    request.merge!('time' => params.dig(:recipes, :time))
-    request.merge!('difficulty' => params.dig(:recipes, :difficulty))
-    request.merge!('category_id' => params.dig(:recipes, :category_id))
-    request.merge!('user_id' => params.dig(:recipes, :user_id))
-
-    @recipes = Recipe.all
+    @recipes = Recipe.search(params[:query])
   end
 end

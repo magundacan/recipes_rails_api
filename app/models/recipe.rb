@@ -1,6 +1,8 @@
 class Recipe < ApplicationRecord
   include ConstantValidatable
 
+  include MeiliSearch::Rails
+
   # jitera-anchor-dont-touch: relations
 
   has_many :ingredients, dependent: :destroy
@@ -26,6 +28,10 @@ class Recipe < ApplicationRecord
   validates :difficulty, presence: true
 
   accepts_nested_attributes_for :ingredients
+
+  meilisearch do
+    attribute :title
+  end
 
   def self.associations
     [:ingredients]
