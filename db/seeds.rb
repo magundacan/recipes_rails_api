@@ -34,3 +34,7 @@ Category.all.each do |category|
     end
   end
 end
+
+if Doorkeeper::Application.count.zero?
+  Doorkeeper::Application.create(name: "Android Client", redirect_uri: "", scopes: "")
+end

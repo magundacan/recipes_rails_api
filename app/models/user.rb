@@ -26,6 +26,11 @@ class User < ApplicationRecord
     [:recipes]
   end
 
+  def self.authenticate(email, password)
+    user = User.find_for_authentication(email: email)
+    user&.valid_password?(password) ? user : nil
+  end
+
   # jitera-anchor-dont-touch: reset_password
   def generate_reset_password_token
     raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
