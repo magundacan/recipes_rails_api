@@ -39,6 +39,7 @@ resources :categories, only: [:index, :create, :show, :update, :destroy] do
  end
 
 resources :recipes, only: [:index, :create, :show, :update, :destroy] do
+  resources :ratings, except: [:new, :edit], shallow: true
  end
 
   end
