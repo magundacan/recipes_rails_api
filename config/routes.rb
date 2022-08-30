@@ -42,6 +42,7 @@ resources :recipes, only: [:index, :create, :show, :update, :destroy] do
   resources :ratings, except: [:new, :edit], shallow: true
  end
 
+resources :conversions, only: [:create]
   end
 
   # jitera-anchor-dont-touch: webhooks
