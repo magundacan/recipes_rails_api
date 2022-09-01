@@ -1,7 +1,7 @@
 class Recipe < ApplicationRecord
   include ConstantValidatable
 
-  include MeiliSearch::Rails
+  include Filterable
 
   # jitera-anchor-dont-touch: relations
 
@@ -31,9 +31,13 @@ class Recipe < ApplicationRecord
 
   accepts_nested_attributes_for :ingredients
 
-  meilisearch do
-    attribute :title
-  end
+  scope :filter_by_title, -> (title) { where("LOWER(title) LIKE ?", "%#{title.downcase}%") }
+
+  scope :filter_by_min_time, -> (min_time) { where("CAST(time AS UNSIGNED) >= ?", min_time.to_i) }
+
+  scope :filter_by_max_time, -> (max_time) { where("CAST(time AS UNSIGNED) <= ?", max_time.to_i) }
+
+  scope :filter_by_difficulty, -> (difficulty) { where("difficulty = ?", difficulty.to_i) }
 
   def self.associations
     [:ingredients]

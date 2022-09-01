@@ -44,6 +44,6 @@ class Api::RecipesController < Api::BaseController
   end
 
   def index
-    @recipes = Recipe.search(params[:query])
+    @recipes = Recipe.filter(params.slice(:title, :min_time, :max_time, :difficulty))
   end
 end
